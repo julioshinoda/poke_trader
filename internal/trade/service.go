@@ -1,6 +1,7 @@
 package trade
 
 import (
+	"errors"
 	"log"
 	"os"
 	"poketrader/pkg/pokeapi"
@@ -29,6 +30,9 @@ func (tm tradeManager) TradeCalculator(trade Trade) (bool, error) {
 	var wg sync.WaitGroup
 	indexOne := int(0)
 	indexTwo := int(0)
+	if err := tm.validateQuantity(trade.FirstTrainerList, trade.SecondTrainerList); err != nil {
+		return false, err
+	}
 	for _, pk := range trade.FirstTrainerList {
 		wg.Add(1)
 
@@ -59,6 +63,16 @@ func (tm tradeManager) TradeCalculator(trade Trade) (bool, error) {
 		return false, err
 	}
 	return trade.Fair, nil
+}
+
+func (tm tradeManager) validateQuantity(line1 []*Pokemon, line2 []*Pokemon) error {
+	if len(line1) > 6 || len(line1) < 1 {
+		return errors.New("only allowed between 1 and 6 pokemons")
+	}
+	if len(line2) > 6 || len(line2) < 1 {
+		return errors.New("only allowed between 1 and 6 pokemons")
+	}
+	return nil
 }
 
 func (tm tradeManager) getPokemon(pokemon string) Pokemon {
