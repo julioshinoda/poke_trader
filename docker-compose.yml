@@ -1,0 +1,12 @@
+version: "3.1"
+services:
+  db:
+    image: "postgres:latest"
+    environment:
+      - POSTGRES_USER=
+      - POSTGRES_PASSWORD=
+      - POSTGRES_DB=trade
+    ports:
+      - '5433:5432'
+    volumes:
+      - ./db/migrations/1605405479633_initial_schema.up.sql:/docker-entrypoint-initdb.d/init.sql  
