@@ -1,1 +1,1 @@
-web: bin/poke-trade
+web: cmd
