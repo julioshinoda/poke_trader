@@ -6,7 +6,7 @@ type Trade struct {
 	ID                int        `json:"id"`
 	FirstTrainerList  []*Pokemon `json:"first_trainer_list"`
 	SecondTrainerList []*Pokemon `json:"second_trainer_list"`
-	Fair              bool       `json:"fair,omitempty"`
+	Fair              bool       `json:"fair"`
 	CreatedAt         time.Time  `json:"created_at,omitempty" `
 }
 
