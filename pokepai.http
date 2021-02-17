@@ -1,0 +1,58 @@
+POST http://localhost:9001/trade
+Content-Type: application/json
+
+{
+    "first_trainer_list":[
+        {
+            "name":"squirtle"
+        },
+        {
+            "name":"charizard"
+        }
+    ],
+     "second_trainer_list":[
+        {
+            "name":"cubone"
+        },
+         {
+            "name":"cubone"
+        },
+           {
+            "name":"nidorina"
+        }
+    ]
+}
+
+###
+GET http://localhost:9001/trade
+Content-Type: application/json
+
+###
+GET https://trade-pokemon.herokuapp.com/trade
+Content-Type: application/json
+
+###
+POST https://trade-pokemon.herokuapp.com/trade
+Content-Type: application/json
+
+{
+    "first_trainer_list":[
+        {
+            "name":"squirtle"
+        },
+        {
+            "name":"charizard"
+        }
+    ],
+     "second_trainer_list":[
+        {
+            "name":"cubone"
+        },
+         {
+            "name":"cubone"
+        },
+           {
+            "name":"nidorina"
+        }
+    ]
+}
