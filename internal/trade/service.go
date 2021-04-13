@@ -12,6 +12,8 @@ import (
 type TradeManager interface {
 	TradeList() ([]Trade, error)
 	TradeCalculator(trade Trade) (bool, error)
+	//////////////////////Trade
+	TradeByID(id string) ([]Trade, error)
 }
 
 type tradeManager struct {
@@ -20,6 +22,11 @@ type tradeManager struct {
 
 func NewTradeManager() TradeManager {
 	return tradeManager{Repo: NewRepo()}
+}
+/////////////////////////////////////////////Trade
+func (tm tradeManager) TradeByID(id string) ([]Trade, error) {
+	return tm.Repo.GetByID(id)
+
 }
 
 func (tm tradeManager) TradeList() ([]Trade, error) {

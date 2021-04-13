@@ -12,6 +12,8 @@ import (
 type Repository interface {
 	Save(tr Trade) error
 	Get() ([]Trade, error)
+	////////////////////Trade
+	GetByID(id string) ([]Trade, error)
 }
 
 type repo struct {
@@ -21,6 +23,36 @@ type repo struct {
 func NewRepo() Repository {
 	conn, _ := postgres.GetConnection()
 	return repo{DBClient: conn}
+}
+//////////////////////////////////Trade
+func (r repo) GetByID(id string) ([]Trade, error) {
+	lista:= []Trade{}
+	q := fmt.Sprintf(`SELECT * FROM public.trade where id=%s`,id)
+	rows, err := r.DBClient.Query(q)
+	if err != nil {
+		log.Printf("Error on get trade: %v\n", err)	
+		return nil, err
+	}
+	for rows.Next() {
+		tr:=Trade{}
+		var line1, line2 []byte
+		if err := rows.Scan(&tr.ID, &line1, &line2, &tr.CreatedAt, &tr.Fair); err != nil {
+			log.Printf("Error on get trade: %v\n", err)
+			return nil, err
+			
+		}
+		json.Unmarshal(line1, &tr.FirstTrainerList)
+
+		json.Unmarshal(line2, &tr.SecondTrainerList)
+
+		lista = append(lista , tr)
+		
+		
+	}
+	
+	return lista, nil
+	// return Trade{}, nil
+
 }
 
 func (r repo) Save(tr Trade) error {
@@ -66,6 +98,7 @@ func (r repo) Get() ([]Trade, error) {
 		json.Unmarshal(line2, &tr.SecondTrainerList)
 
 		list = append(list, tr)
+		
 	}
 	return list, nil
 }

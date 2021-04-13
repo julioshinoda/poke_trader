@@ -11,9 +11,25 @@ func Handler(r chi.Router) {
 
 	r.Post("/trade", TradeHandler)
 	r.Get("/trade", TradeListHandler)
+	r.Get("/trade/{id}", GetTradeByIDHandler)
 
 }
-
+func GetTradeByIDHandler(w http.ResponseWriter, r *http.Request) {
+	tradeID := chi.URLParam(r, "id")
+	service := NewTradeManager()
+	trade, err := service.TradeByID(tradeID)
+	if err != nil {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(400)
+		response, _ := json.Marshal(map[string]interface{}{"error": err.Error()})
+		w.Write(response)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	response, _ := json.Marshal(trade)
+	w.Write(response)
+}
 func TradeListHandler(w http.ResponseWriter, r *http.Request) {
 	service := NewTradeManager()
 	list, err := service.TradeList()

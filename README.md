@@ -119,3 +119,5 @@ Makefile file has the following commands
 
 In this file has the environment variables for running application
 
+docker-compose up
+make run
