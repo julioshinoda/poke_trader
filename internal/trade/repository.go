@@ -24,32 +24,32 @@ func NewRepo() Repository {
 	conn, _ := postgres.GetConnection()
 	return repo{DBClient: conn}
 }
+
 //////////////////////////////////Trade
 func (r repo) GetByID(id string) ([]Trade, error) {
-	lista:= []Trade{}
-	q := fmt.Sprintf(`SELECT * FROM public.trade where id=%s`,id)
+	lista := []Trade{}
+	q := fmt.Sprintf(`SELECT id,trainerOne,trainerTwo,created_at,fair FROM public.trade where id=%s`, id)
 	rows, err := r.DBClient.Query(q)
 	if err != nil {
-		log.Printf("Error on get trade: %v\n", err)	
+		log.Printf("Error on get trade: %v\n", err)
 		return nil, err
 	}
 	for rows.Next() {
-		tr:=Trade{}
+		tr := Trade{}
 		var line1, line2 []byte
 		if err := rows.Scan(&tr.ID, &line1, &line2, &tr.CreatedAt, &tr.Fair); err != nil {
 			log.Printf("Error on get trade: %v\n", err)
 			return nil, err
-			
+
 		}
 		json.Unmarshal(line1, &tr.FirstTrainerList)
 
 		json.Unmarshal(line2, &tr.SecondTrainerList)
 
-		lista = append(lista , tr)
-		
-		
+		lista = append(lista, tr)
+
 	}
-	
+
 	return lista, nil
 	// return Trade{}, nil
 
@@ -98,7 +98,7 @@ func (r repo) Get() ([]Trade, error) {
 		json.Unmarshal(line2, &tr.SecondTrainerList)
 
 		list = append(list, tr)
-		
+
 	}
 	return list, nil
 }
