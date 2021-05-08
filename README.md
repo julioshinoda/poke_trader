@@ -121,3 +121,11 @@ In this file has the environment variables for running application
 
 docker-compose up
 make run
+
+
+##Phillip´s todo
+
+[] PUT - endpoint to update trade
+[] DELETE -  endpoint to delete trade
+[] Filter by fair  
+[] Criar testes unitários para os serviços
