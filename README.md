@@ -125,7 +125,7 @@ make run
 
 ##Phillip´s todo
 
-[] PUT - endpoint to update trade
-[] DELETE -  endpoint to delete trade
-[] Filter by fair  
-[] Criar testes unitários para os serviços
+[] PUT - endpoint to update trade - atualizar informações
+[] DELETE -  endpoint to delete trade - deleta trade
+[] Filter by fair  - query param fair t f
+[] Criar testes unitários para os serviços - teste service
